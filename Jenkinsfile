@@ -33,40 +33,35 @@ pipeline {
         }
 
             // Stage to build main branch (this will also send the email)
+
         stage('Build Main') {
-            when {
-                branch 'main'
-            }
-            stage('Build Main') {
             when {
                 branch 'main'
             }
             steps {
                 script {
-                        echo "Building main branch"
-                        bat 'mvn clean package'
+                    echo "Building main branch"
+                    bat 'mvn clean package'
 
-                        // On Windows, use the `dir` command to find the .jar file in target/
-                        def jarFile = bat(script: 'dir /b target\\*.jar', returnStdout: true).trim()
+                    // On Windows, use the `dir` command to find the .jar file in target/
+                    def jarFile = bat(script: 'dir /b target\\*.jar', returnStdout: true).trim()
 
-                        if (jarFile) {
-                            echo "Found jar file: ${jarFile}"
+                    if (jarFile) {
+                        echo "Found jar file: ${jarFile}"
 
-                            // Send email with the jar file attached
-                            emailext(
-                                to: "devduku@gmail.com",
-                                subject: "Build Successful for Main Branch",
-                                body: "The main branch build was successful, and the jar is ready. The file is located at ${jarFile}",
-                                attachmentsPattern: "target\\${jarFile}",
-                                mimeType: 'text/html'
-                            )
-                        } else {
-                            echo "No JAR file found in target/"
-                        }
-                    }    
-                }
+                        // Send email with the jar file attached
+                        emailext(
+                            to: "devduku@gmail.com",
+                            subject: "Build Successful for Main Branch",
+                            body: "The main branch build was successful, and the jar is ready. The file is located at ${jarFile}",
+                            attachmentsPattern: "target\\${jarFile}",
+                            mimeType: 'text/html'
+                        )
+                    } else {
+                        echo "No JAR file found in target/"
+                    }
+                }    
             }
-
         }
 
     }
