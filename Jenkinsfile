@@ -69,7 +69,9 @@ pipeline {
 
         }
 
-        post {
+    }
+
+    post {
             always {
                 echo "Cleaning up after build..."
                 cleanWs() // Clean up workspace after each run
@@ -82,6 +84,5 @@ pipeline {
             failure {
                 echo "Build failed. Please check the logs."
             }
-        }
     }
 }
