@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     echo "Building PR branch"
-                    bat 'mv clean install'
+                    bat 'mvn clean install'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     echo "Building branch"
-                    bat 'mv clean install'
+                    bat 'mvn clean install'
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     echo "Building main branch"
-                    bat 'mv clean package'
+                    bat 'mvn clean package'
                     // Assuming that the Maven build produces a jar file in target/
                     def jarFile = findFiles(glob: 'target/*.jar')[0]
 
