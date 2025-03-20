@@ -44,6 +44,17 @@ pipeline {
                     bat 'mvn clean package'
                     archiveArtifacts artifacts: 'target/*.jar, target/*.war'
 
+                    script {
+                    // Define the target folder where you want to deploy the .jar file
+                    def targetFolder = '"C:\\Users\\allan\\OneDrive\\Desktop\\Jenkins"' // Replace with your local folder path
+
+                    // Create the target folder if it doesn't exist
+                    bat "if not exist \"${targetFolder}\" mkdir \"${targetFolder}\""
+
+                    // Move the .jar file to the specified folder
+                    bat "copy target\\*.jar \"${targetFolder}\\\""
+                    }
+
                     // On Windows, use the `dir` command to find the .jar file in target/
                     def jarFile = bat(script: 'dir /b target\\*.jar', returnStdout: true).trim()
 
