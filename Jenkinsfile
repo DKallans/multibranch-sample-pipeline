@@ -42,6 +42,7 @@ pipeline {
                 script {
                     echo "Building main branch"
                     bat 'mvn clean package'
+                    archiveArtifacts artifacts: 'target/*.jar, target/*.war'
 
                     // On Windows, use the `dir` command to find the .jar file in target/
                     def jarFile = bat(script: 'dir /b target\\*.jar', returnStdout: true).trim()
