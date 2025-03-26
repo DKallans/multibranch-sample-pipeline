@@ -44,20 +44,15 @@ pipeline {
                     sh 'mvn clean package'
                     archiveArtifacts artifacts: 'target/*.jar, target/*.war'
 
-                    if (jarFile) {
-                        echo "Found jar file: ${jarFile}"
 
                         // Send email with the jar file attached
                         emailext(
                             to: "devduku@gmail.com",
                             subject: "Build Successful for Main Branch",
                             body: "The main branch build was successful, and the jar is ready. The file is located at ${jarFile}",
-                            attachmentsPattern: "target\\${jarFile}",
                             mimeType: 'text/html'
                         )
-                    } else {
-                        echo "No JAR file found in target/"
-                    }
+                   
                 }    
             }
         }
