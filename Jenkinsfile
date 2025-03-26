@@ -49,7 +49,7 @@ pipeline {
                         emailext(
                             to: "devduku@gmail.com",
                             subject: "Build Successful for Main Branch",
-                            body: "The main branch build was successful, and the jar is ready. The file is located at ${jarFile}",
+                            body: "The main branch build was successful, and the jar is ready.",
                             mimeType: 'text/html'
                         )
                    
