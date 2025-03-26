@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     echo "Building PR branch"
-                    bat 'mvn clean install'
+                    sh 'mvn clean install'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     echo "Building branch"
-                    bat 'mvn clean install'
+                    sh 'mvn clean install'
                 }
             }
         }
@@ -41,22 +41,8 @@ pipeline {
             steps {
                 script {
                     echo "Building main branch"
-                    bat 'mvn clean package'
+                    sh 'mvn clean package'
                     archiveArtifacts artifacts: 'target/*.jar, target/*.war'
-
-                    script {
-                    // Define the target folder where you want to deploy the .jar file
-                    def targetFolder = '"C:\\Users\\allan\\OneDrive\\Desktop\\Jenkins"' // Replace with your local folder path
-
-                    // Create the target folder if it doesn't exist
-                    bat "if not exist \"${targetFolder}\" mkdir \"${targetFolder}\""
-
-                    // Move the .jar file to the specified folder
-                    bat "copy target\\*.jar \"${targetFolder}\\\""
-                    }
-
-                    // On Windows, use the `dir` command to find the .jar file in target/
-                    def jarFile = bat(script: 'dir /b target\\*.jar', returnStdout: true).trim()
 
                     if (jarFile) {
                         echo "Found jar file: ${jarFile}"
